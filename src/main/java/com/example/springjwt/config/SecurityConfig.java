@@ -58,7 +58,7 @@ public class SecurityConfig {
 
         // 5. URL별 접근 권한 설정 - 로그인에 관해 허용하기 (로그인만 모두가 들어가고 나머지는 로그인을 해야 접근 가능)
         http.authorizeHttpRequests(auth -> auth
-                .requestMatchers("/login").permitAll() // 로그인 페이지 및 정적 리소스는 모두 허용
+                .requestMatchers("/login", "/api/login").permitAll() // 로그인 페이지 및 정적 리소스는 모두 허용
                 .anyRequest().authenticated() // 그 외 모든 요청은 인증 필요
         );
 
@@ -80,7 +80,7 @@ public class SecurityConfig {
 
         // JwtAuthenticationFilter를 UsernamePasswordAuthenticationFilter 자리에 등록
         JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(jwtUtil, authenticationManager(authenticationConfiguration));
-        jwtAuthenticationFilter.setFilterProcessesUrl("/login"); // 로그인 처리 URL 재정의, 로그인할 때 얘를 가지고 재정의를 하겠다~
+        jwtAuthenticationFilter.setFilterProcessesUrl("/api/login"); // 로그인 처리 URL 재정의, 로그인할 때 얘를 가지고 재정의를 하겠다~
         http.addFilterAt(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         // JwtAuthorizationFilter를 BasicAuthenticationFilter 앞에 등록
         // JwtAuthorization Filter - 토큰을 발급하는 역할을 하는 필터
@@ -94,7 +94,7 @@ public class SecurityConfig {
     }
 
     // 여기에 테스트용 유저 디테일만 넣어주면 됨
-    @Bean
+    @Bean // DB에 우리가 지금 저장하면서 하는 게 아니기 때문에 간결하게 이렇게 적어줌~
     public UserDetailsService userDetailsService() {
         UserDetails userDetails = User.builder()
                 .username("user")

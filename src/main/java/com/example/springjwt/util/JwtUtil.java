@@ -12,6 +12,9 @@ import java.util.Date;
 
 @Component // Scan해서 등록해주겠다는 의미 (의존성을 주입하기 위해 적은 것)
 public class JwtUtil {
+    // https://jwtsecrets.com/ -> application에 저장하고 불러쓰기
+    // 방법1. 파일 자체에 넣어쓰고 대신 git에 올리지 않기
+    // 방법2. 환경변수로 불러오도록 하고 이러면 git에 올려도 됨
     private final SecretKey secretKey; // 비밀키 -> JWT 토큰을 만들 때 해석할 때 쓰일 암호화 키
     private final Long accessTokenExpiration; // 만료시간 (얼마나 유지시킬 것이냐)
     // 의존성 주입 방법 : 생성자 주입, 필드 주입, 세터 주입 - 요즘은 생성자 주입이 대세
@@ -53,6 +56,7 @@ public class JwtUtil {
     }
 
     // 토큰 유효성 검증
+    // 형식이 안 맞으면 에러 뜸 -> xxxxxxx:yyyyyy:zzzzz? 혹은 secret key로 뭔가 해석이 안 됨
     public boolean validateToken(String token) {
         try {
             // 토큰 파싱 시 예외가 발생하지 않으면 유효한 토큰
@@ -73,5 +77,4 @@ public class JwtUtil {
         // subject -> username
         // 발행일시, 만료일시...
     }
-
 }

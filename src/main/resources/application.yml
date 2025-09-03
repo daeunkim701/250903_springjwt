@@ -5,5 +5,5 @@ spring:
 # JWT (빨간색으로 뜨면 아직 연결되어있는 게 없다는 뜻)
 jwt:
   secret: a8cb50f31c5692b4b8914381c01c70df # 이게 JwtUtil 파일에 ${jwt.secret} 이 부분에 들어가는 것
-  # ms -> 1/1000 초 -> 1000 * 60 * 60
+  # ms -> 1/1000 초 -> 1000 * 60 * 60 (1시간)
   access-token-expiration: 3600000

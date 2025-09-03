@@ -13,8 +13,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -90,6 +94,15 @@ public class SecurityConfig {
     }
 
     // 여기에 테스트용 유저 디테일만 넣어주면 됨
+    @Bean
+    public UserDetailsService userDetailsService() {
+        UserDetails userDetails = User.builder()
+                .username("user")
+                .password(passwordEncoder().encode("password"))
+                .roles("USER")
+                .build();
+        return new InMemoryUserDetailsManager(userDetails);
+    } // 인증을 위한 의존성 주입을 하는 것
 }
 
 // 이 파일에서 비활성화 이런 건 언제 쓰든 바뀌는 게 아니라서 AI 돌리고 URL 권한 허가 이런 것만 내가 수동으로 바꾸는 쪽으로 AI 돌려서 이거 전체 코드 짜서 내가 바꿀 것만 바꾸면 되는 것

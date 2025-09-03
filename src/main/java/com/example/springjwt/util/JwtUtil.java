@@ -16,7 +16,9 @@ public class JwtUtil {
 
     // 생성자 주입
     // application.properties 또는 yml에 있는 값을 불러오는 것!!
-    public JwtUtil(@Value("${jwt.secret}") String secret, @Value("${jwt.access-token-expiration") Long accessTokenExpiration) {
+    public JwtUtil(@Value("${jwt.secret}") String secret, @Value("${jwt.access-token-expiration}") Long accessTokenExpiration) {
+        System.out.println("secret : " + secret);
+        System.out.println("accessTokenExpiration : " + accessTokenExpiration);
         this.secretKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
         this.accessTokenExpiration = accessTokenExpiration;
     }

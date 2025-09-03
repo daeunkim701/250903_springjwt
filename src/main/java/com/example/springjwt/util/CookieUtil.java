@@ -34,11 +34,11 @@ public class CookieUtil {
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                if (cookie.getName().equals(name)) {
-                    cookie.setValue("");
-                    cookie.setPath("/");
-                    cookie.setMaxAge(0); // 쿠키 만료
-                    response.addCookie(cookie);
+                if (cookie.getName().equals(name)) { // 이름이 같다면
+                    cookie.setValue(""); // 값도 비우고
+                    cookie.setPath("/"); // 경로도 루트로 바꾸고
+                    cookie.setMaxAge(0); // 쿠키 만료시키기
+                    response.addCookie(cookie); // 빈 쿠키 넣기
                 }
             }
         }
